@@ -20,9 +20,7 @@
       {"colName":"value", "colType":"Integer", "colIndex":4}
    ],
    "resultset":[  
-      [-80.19366, 25.77427, "Miami", 10, 25],
-      [-97.74306, 30.267153, "Austin", 2, 50],
-      [-80.137314, 26.122438, "Fort Lauderdale", 5, 12]
+      [-87.6298, 41.8781, "Chicago", 10, 25]
    ]
 }]]></Query>
    </DataAccess>
