@@ -1,4 +1,4 @@
-function() {
+function tooltipOnHover() {
 	/* TOOLTIP ON MOUSE HOVER 2 */
 	var me = this;
 	/*
@@ -16,8 +16,9 @@ function() {
 			$('#popupObj')
 				.css('top', e.pageY -50)
 				.css('left', e.pageX + 5)
+				// html contained in popup
 				.html(
-					modelItem.id + '(' + modelItem.attributes.data.value + ')'
+					modelItem.id + '<br>value: ' + modelItem.attributes.data.value + ''
 				);
 
 		}
