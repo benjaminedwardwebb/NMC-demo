@@ -40,7 +40,7 @@ The PDI transformation `ESRI-to-GeoJSON.ktr` takes as parameters the path to the
 source shapefile and target geojson. By default these point to the included
 files in the `/resources` directories.
 
-[image of ktr]
+![ESRI to GeoJSON Transformation](/resources/img/ESRItoGeoJSONTransform.png?raw=true "ESRI-to-GeoJSON.ktr")
 
 The transformation simply calls the `ogr2ogr` command with the proper inputs and
 options, and the GDAL libraries handle the conversion.
@@ -57,4 +57,4 @@ javascript to load GeoJSON shapes
 ## Add Dashboard Features
 tooltip
 
-![text](ChicagoCrimeHeatMap.png?raw=true "Chicago Crime Heat Map Dashboard")
+![Chicago Crime Heat Map](/resources/img/ChicagoCrimeHeatMap.png?raw=true "Chicago Crime Heat Map Dashboard")
