@@ -16,13 +16,13 @@
       </parameter>
       <parameter>
         <name>GEOJSON_TARGET</name>
-        <default_value>/resources/geojson/neighborhoods_2012.geojson</default_value>
+        <default_value>/resources/geojson/community-areas-current-geojson.js</default_value>
         <description/>
       </parameter>
       <parameter>
         <name>SHAPEFILE_SOURCE</name>
-        <default_value>/resources/esri/Neighborhoods_2012b.shp</default_value>
-        <description/>
+        <default_value>/resources/esri/geo_export_80095076-0a6b-4028-a365-64ec9f0350d7.shp</default_value>
+        <description>/resources/esri/Neighborhoods_2012b.shp</description>
       </parameter>
     </parameters>
     <log>
