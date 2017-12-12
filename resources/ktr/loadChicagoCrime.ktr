@@ -11,7 +11,7 @@
     <parameters>
       <parameter>
         <name>year</name>
-        <default_value>2015</default_value>
+        <default_value/>
         <description/>
       </parameter>
     </parameters>

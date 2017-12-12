@@ -7,7 +7,6 @@
       </Connection>
       <Connection id="CrimeCounts" type="kettle.TransFromFile">
          <KtrFile>resources/ktr/loadChicagoCrime.ktr</KtrFile>
-         <variables datarow-name="year" variable-name="year"/>
       </Connection>
    </DataSources>
    <DataAccess access="public" connection="markersDS" id="markersDS" type="jsonScriptable">
@@ -29,10 +28,10 @@
    </DataAccess>
    <DataAccess access="public" connection="CrimeCounts" id="CrimeCounts" type="kettle">
       <Name>CrimeCounts</Name>
-      <Cache duration="3600" enabled="true"/>
+      <Cache duration="300" enabled="true"/>
       <Columns/>
       <Parameters>
-         <Parameter default="2015" name="year" type="Integer"/>
+         <Parameter default="Year" name="year" type="String"/>
       </Parameters>
       <Query><![CDATA[output]]></Query>
    </DataAccess>
