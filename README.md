@@ -15,23 +15,21 @@ This guide uses the following software:
 
 And the following data from [Chicago Data Portal](https://data.cityofchicago.org/):
  - Neighborhoods Shapefile [https://data.cityofchicago.org/Facilities-Geographic-Boundaries/Boundaries-Neighborhoods/9wp7-iasj/data](https://data.cityofchicago.org/Facilities-Geographic-Boundaries/Boundaries-Neighborhoods/9wp7-iasj/data)
- - some data w/ Community Area Name or Community Area ID
+ - Chicago Crime Data [https://data.cityofchicago.org/Public-Safety/Crimes-2001-to-present/ijzp-q8t2](https://data.cityofchicago.org/Public-Safety/Crimes-2001-to-present/ijzp-q8t2)
 
-The data is already downloaded to the `/resources/esri` and `/resources/csv`
-directories.
+The shapefile is already downloaded and unzipped to the `/resources/esri` directory.
 
-Please see the following linkes for installation instructions:
- - pentaho help server 8.0
- - pentaho help pdi 8.0
- - GDAL 4 windows https://sandbox.idre.ucla.edu/sandbox/tutorials/installing-gdal-for-windows
- - GDAL 4 mac ??
- - GDAL 4 linux
+Please see the following links for installation instructions:
+ - [Archive Installation of the Pentaho Server](https://help.pentaho.com/Documentation/8.0/Setup/Installation/Archive)
+ - [Install PDI Tools and Plugins](https://help.pentaho.com/Documentation/8.0/Setup/Installation/Tools/PDI_Client_and_plugins)
+ - [Installing GDAL for Windows](https://sandbox.idre.ucla.edu/sandbox/tutorials/installing-gdal-for-windows)
+ - GDAL for mac/linux?
 
 ## Convert ESRI to GeoJSON
 There's more than 1 way to convert ESRI to GeoJSON, but here we use the GDAL
-suite's `ogr2ogr` command line tool. If you have a large volume of shapefile
-data, you may want to look at alternative conversion tools appropriate for your
-environment.
+suite's [`ogr2ogr`](http://www.gdal.org/ogr2ogr.html) command line tool. If you
+have a large volume of shapefile data, you may want to look at alternative 
+conversion tools appropriate for your environment.
 
 A brief example of using `ogr2ogr` to convert ESRI to GeoJSON can be found [on
 GitHub](https://gist.github.com/benbalter/5858851).
