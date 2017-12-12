@@ -2,7 +2,7 @@
 <transformation>
   <info>
     <name>loadChicagoCrime</name>
-    <description/>
+    <description>${Internal.Transformation.Filename.Directory}/../csv/Aggregated-Crime-Counts.csv</description>
     <extended_description/>
     <trans_version/>
     <trans_type>Normal</trans_type>
@@ -474,7 +474,7 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <filename>${Internal.Transformation.Filename.Directory}/../csv/Aggregated-Crime-Counts.csv</filename>
+    <filename>C:\Users\bwebb\Lib\pentaho-server-ee-8.0.0.0-28\pentaho-server\pentaho-solutions\csv\Aggregated-Crime-Counts.csv</filename>
     <filename_field/>
     <rownum_field/>
     <include_filename>N</include_filename>
@@ -644,16 +644,16 @@
     </partitioning>
     <fields>
       <field>
-        <name>Year</name>
-        <rename/>
-      </field>
-      <field>
         <name>Community Area</name>
-        <rename/>
+        <rename>id</rename>
       </field>
       <field>
         <name>Crimes</name>
-        <rename/>
+        <rename>fill</rename>
+      </field>
+      <field>
+        <name>Year</name>
+        <rename>year</rename>
       </field>
       <select_unspecified>N</select_unspecified>
     </fields>

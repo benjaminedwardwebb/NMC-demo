@@ -5,6 +5,10 @@
          <Initscript/>
          <Language>beanshell</Language>
       </Connection>
+      <Connection id="CrimeCounts" type="kettle.TransFromFile">
+         <KtrFile>resources/ktr/loadChicagoCrime.ktr</KtrFile>
+         <variables datarow-name="year" variable-name="year"/>
+      </Connection>
    </DataSources>
    <DataAccess access="public" connection="markersDS" id="markersDS" type="jsonScriptable">
       <Name>markersDS</Name>
@@ -12,16 +16,24 @@
       <Columns/>
       <Parameters/>
       <Query><![CDATA[{  
-   "metadata":[  
-      {"colName":"Longitude", "colType":"Numeric", "colIndex":0},
-      {"colName":"Latitude", "colType":"Numeric", "colIndex":1},
-      {"colName":"id", "colType":"String", "colIndex":2},
-      {"colName":"fill", "colType":"Integer", "colIndex":3},
-      {"colName":"value", "colType":"Integer", "colIndex":4}
+   "metadata":[ 
+      {"colName":"id", "colType":"Integer", "colIndex":0},
+      {"colName":"fill", "colType":"Integer", "colIndex":1},
+      {"colName":"value", "colType":"Integer", "colIndex":2}
    ],
    "resultset":[  
-      [-87.6298, 41.8781, "Chicago", 10, 25]
+      [1, 25, 45],
+      [77, 5, 5]
    ]
 }]]></Query>
+   </DataAccess>
+   <DataAccess access="public" connection="CrimeCounts" id="CrimeCounts" type="kettle">
+      <Name>CrimeCounts</Name>
+      <Cache duration="3600" enabled="true"/>
+      <Columns/>
+      <Parameters>
+         <Parameter default="2015" name="year" type="Integer"/>
+      </Parameters>
+      <Query><![CDATA[output]]></Query>
    </DataAccess>
 </CDADescriptor>
