@@ -57,4 +57,4 @@ javascript to load GeoJSON shapes
 ## Add Dashboard Features
 tooltip
 
-![alt text](https://raw.githubusercontent/benjaminedwardwebb/NMC-demo/master/ChicagoCrimeHeatMap.png)
+![text](ChicagoCrimeHeatMap.png?raw=true "Chicago Crime Heat Map Dashboard")
