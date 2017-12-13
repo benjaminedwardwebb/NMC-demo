@@ -14,7 +14,7 @@ This guide uses the following software:
  - GDAL 2.2.1
 
 And the following data from [Chicago Data Portal](https://data.cityofchicago.org/):
- - Neighborhoods Shapefile [https://data.cityofchicago.org/Facilities-Geographic-Boundaries/Boundaries-Neighborhoods/9wp7-iasj/data](https://data.cityofchicago.org/Facilities-Geographic-Boundaries/Boundaries-Neighborhoods/9wp7-iasj/data)
+ - Community Areas Shapefile [https://data.cityofchicago.org/Facilities-Geographic-Boundaries/Boundaries-Community-Areas-current-/cauq-8yn6](https://data.cityofchicago.org/Facilities-Geographic-Boundaries/Boundaries-Community-Areas-current-/cauq-8yn6)
  - Chicago Crime Data [https://data.cityofchicago.org/Public-Safety/Crimes-2001-to-present/ijzp-q8t2](https://data.cityofchicago.org/Public-Safety/Crimes-2001-to-present/ijzp-q8t2)
 
 The shapefile is already downloaded and unzipped to the `/resources/esri` directory.
@@ -23,7 +23,6 @@ Please see the following links for installation instructions:
  - [Archive Installation of the Pentaho Server](https://help.pentaho.com/Documentation/8.0/Setup/Installation/Archive)
  - [Install PDI Tools and Plugins](https://help.pentaho.com/Documentation/8.0/Setup/Installation/Tools/PDI_Client_and_plugins)
  - [Installing GDAL for Windows](https://sandbox.idre.ucla.edu/sandbox/tutorials/installing-gdal-for-windows)
- - GDAL for mac/linux?
 
 ## Convert ESRI to GeoJSON
 There's more than 1 way to convert ESRI to GeoJSON, but here we use the GDAL
@@ -99,18 +98,18 @@ As a brief example here, we can load our GeoJSON file with the following
 JavaScript in our Pre-Execution stage:
 
 ``` javascript
-	// locate our GeoJSON file under resources. Note, the BA server does not 
-	// recognize the .geojson extension, so we rename to .js
-    var getResource = this.dashboard.getWebAppPath() + '/plugin/pentaho-cdf-dd/api/resources';
-    var mapDef = '${solution:resources/geojson/community-areas-current-geojson.js}';
+// locate our GeoJSON file under resources. Note, the BA server does not 
+// recognize the .geojson extension, so we rename to .js
+var getResource = this.dashboard.getWebAppPath() + '/plugin/pentaho-cdf-dd/api/resources';
+var mapDef = '${solution:resources/geojson/community-areas-current-geojson.js}';
 
-	// here we pass in our GeoJSON file, and also specify the GeoJSON property
-	// to use as a polygon ID
-    this.shapeResolver = 'geoJSON';
-    this.setAddInOptions('ShapeResolver', 'geoJSON', {
-        url: getResource + mapDef, 
-        idPropertyName: 'area_num_1' 
-    });
+// here we pass in our GeoJSON file, and also specify the GeoJSON property
+// to use as a polygon ID
+this.shapeResolver = 'geoJSON';
+this.setAddInOptions('ShapeResolver', 'geoJSON', {
+	url: getResource + mapDef, 
+	idPropertyName: 'area_num_1' 
+});
 ```
     
 This will plot the polygons, with 1 caveat. The NewMapComponent also takes a
@@ -122,10 +121,10 @@ We can specify which columns from our datasource to use as the ID in a snippet
 also in the Pre-Execution phase like so:
 
 ``` javascript
-    this.visualRoles = {
-        id: 0,				// communityarea
-        fill: 1				// crimes
-    };
+this.visualRoles = {
+	id: 0,				// communityarea
+	fill: 1				// crimes
+};
 ```
 
 Note, here we defined the column for `id` as the first column (index 0), and use
@@ -149,19 +148,19 @@ has some defaults, but to ensure it works smoothly we can implement the fill
 function ourselves as follows:
 
 ``` javascript
-	// define the polygon's fill function manually based on the crimes/fill 
-	// value incoming from the datasource
-    this.attributeMapping.fill = function(context, seriesRoot, mapping, row) {
-        var value = row[mapping.fill];
+// define the polygon's fill function manually based on the crimes/fill 
+// value incoming from the datasource
+this.attributeMapping.fill = function(context, seriesRoot, mapping, row) {
+	var value = row[mapping.fill];
 
-        if (_.isNumber(value)) {
-            return this.mapColor(value,
-                0,						// min crimes
-                17336,					// max crimes from dataset
-                this.getColorMap()		// a default color map of green->red
-            );
-        }
-    };
+	if (_.isNumber(value)) {
+		return this.mapColor(value,
+			0,						// min crimes
+			17336,					// max crimes from dataset
+			this.getColorMap()		// a default color map of green->red
+		);
+	}
+};
 ```
 
 The above function validates the incoming fill/crimes column, and then tweaks
