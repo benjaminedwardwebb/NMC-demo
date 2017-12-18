@@ -6,9 +6,9 @@ function() {
     var getResource = this.dashboard.getWebAppPath() + '/plugin/pentaho-cdf-dd/api/resources';
     var mapDef = '${solution:resources/geojson/community-areas-current-geojson.js}';
 
-	this.shapeResolver = 'geoJSON';
-	this.setAddInOptions('ShapeResolver', 'geoJSON', {
-		//BA server does not recognize the .geojson extension
+    this.shapeResolver = 'geoJSON';
+    this.setAddInOptions('ShapeResolver', 'geoJSON', {
+    	//BA server does not recognize the .geojson extension
         url: getResource + mapDef, 
 		//GeoJSON feature property that will be used to index the feature
         idPropertyName: 'area_num_1' 
@@ -43,11 +43,12 @@ function() {
     */
     this.attributeMapping.fill = function(context, seriesRoot, mapping, row) {
         var value = row[mapping.fill];
-
+        var maxValue = row[mapping.max];
+        
         if (_.isNumber(value)) {
             return this.mapColor(value,
                 0,
-                17336,
+                maxValue,
                 this.getColorMap()
             );
         }
