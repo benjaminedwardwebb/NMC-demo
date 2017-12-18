@@ -10,7 +10,7 @@
     <directory>/</directory>
     <parameters>
       <parameter>
-        <name>year</name>
+        <name>yearParameter</name>
         <default_value/>
         <description/>
       </parameter>
@@ -443,8 +443,18 @@
   </notepads>
   <order>
     <hop>
+      <from>CSV file input: crime file</from>
+      <to>get year parameter</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
       <from>rename fields</from>
-      <to>output</to>
+      <to>get community name</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>GeoJson Input</from>
+      <to>get community name</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
@@ -453,12 +463,17 @@
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>CSV file input: crime file</from>
-      <to>get year parameter</to>
+      <from>get community name</from>
+      <to>output</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
       <from>filter by year parameter</from>
+      <to>max crime</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>max crime</from>
       <to>rename fields</to>
       <enabled>Y</enabled>
     </hop>
@@ -467,14 +482,14 @@
     <name>CSV file input: crime file</name>
     <type>CsvInput</type>
     <description/>
-    <distribute>Y</distribute>
+    <distribute>N</distribute>
     <custom_distribution/>
     <copies>1</copies>
     <partitioning>
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <filename>C:\Users\bwebb\Lib\pentaho-server-ee-8.0.0.0-28\pentaho-server\pentaho-solutions\csv\Aggregated-Crime-Counts.csv</filename>
+    <filename>C:\projects\NMC\NMC-demo\resources\csv\Aggregated-Crime-Counts.csv</filename>
     <filename_field/>
     <rownum_field/>
     <include_filename>N</include_filename>
@@ -530,8 +545,89 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>112</xloc>
-      <yloc>112</yloc>
+      <xloc>96</xloc>
+      <yloc>128</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>GeoJson Input</name>
+    <type>JsonInput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <include>N</include>
+    <include_field/>
+    <rownum>N</rownum>
+    <addresultfile>N</addresultfile>
+    <readurl>N</readurl>
+    <removeSourceField>N</removeSourceField>
+    <IsIgnoreEmptyFile>N</IsIgnoreEmptyFile>
+    <doNotFailIfNoFile>Y</doNotFailIfNoFile>
+    <ignoreMissingPath>Y</ignoreMissingPath>
+    <rownum_field/>
+    <file>
+      <name>C:\projects\NMC\NMC-demo\resources\geojson\community-areas-current-geojson.js</name>
+      <filemask/>
+      <exclude_filemask/>
+      <file_required>N</file_required>
+      <include_subfolders>N</include_subfolders>
+    </file>
+    <fields>
+      <field>
+        <name>id</name>
+        <path>$.features[*].properties.area_num_1</path>
+        <type>Integer</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>area_name</name>
+        <path>$.features[*].properties.community</path>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+    </fields>
+    <limit>0</limit>
+    <IsInFields>N</IsInFields>
+    <IsAFile>N</IsAFile>
+    <valueField/>
+    <shortFileFieldName/>
+    <pathFieldName/>
+    <hiddenFieldName/>
+    <lastModificationTimeFieldName/>
+    <uriNameFieldName/>
+    <rootUriNameFieldName/>
+    <extensionFieldName/>
+    <sizeFieldName/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>544</xloc>
+      <yloc>448</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -546,7 +642,7 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <send_true_to>rename fields</send_true_to>
+    <send_true_to>max crime</send_true_to>
     <send_false_to/>
     <compare>
       <condition>
@@ -564,8 +660,49 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>512</xloc>
-      <yloc>112</yloc>
+      <xloc>544</xloc>
+      <yloc>128</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>get community name</name>
+    <type>StreamLookup</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <from>GeoJson Input</from>
+    <input_sorted>N</input_sorted>
+    <preserve_memory>Y</preserve_memory>
+    <sorted_list>N</sorted_list>
+    <integer_pair>N</integer_pair>
+    <lookup>
+      <key>
+        <name>id</name>
+        <field>id</field>
+      </key>
+      <value>
+        <name>area_name</name>
+        <rename>area_name</rename>
+        <default/>
+        <type>String</type>
+      </value>
+    </lookup>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>320</xloc>
+      <yloc>352</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -573,7 +710,7 @@
     <name>get year parameter</name>
     <type>GetVariable</type>
     <description/>
-    <distribute>Y</distribute>
+    <distribute>N</distribute>
     <custom_distribution/>
     <copies>1</copies>
     <partitioning>
@@ -583,14 +720,14 @@
     <fields>
       <field>
         <name>year_parameter</name>
-        <variable>${year}</variable>
+        <variable>${yearParameter}</variable>
         <type>Integer</type>
-        <format/>
+        <format>#</format>
         <currency/>
         <decimal/>
         <group/>
-        <length>-1</length>
-        <precision>-1</precision>
+        <length>15</length>
+        <precision>0</precision>
         <trim_type>none</trim_type>
       </field>
     </fields>
@@ -603,7 +740,7 @@
     </remotesteps>
     <GUI>
       <xloc>320</xloc>
-      <yloc>112</yloc>
+      <yloc>128</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -626,8 +763,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>320</xloc>
-      <yloc>368</yloc>
+      <xloc>96</xloc>
+      <yloc>352</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -655,6 +792,10 @@
         <name>Year</name>
         <rename>year</rename>
       </field>
+      <field>
+        <name>max_crimes</name>
+        <rename>max</rename>
+      </field>
       <select_unspecified>N</select_unspecified>
     </fields>
     <cluster_schema/>
@@ -665,8 +806,56 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>512</xloc>
-      <yloc>368</yloc>
+      <xloc>544</xloc>
+      <yloc>352</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>max crime</name>
+    <type>GroupBy</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <all_rows>Y</all_rows>
+    <ignore_aggregate>N</ignore_aggregate>
+    <field_ignore/>
+    <directory>%%java.io.tmpdir%%</directory>
+    <prefix>grp</prefix>
+    <add_linenr>N</add_linenr>
+    <linenr_fieldname/>
+    <give_back_row>N</give_back_row>
+    <group>
+      <field>
+        <name>Year</name>
+      </field>
+      <field>
+        <name>year_parameter</name>
+      </field>
+    </group>
+    <fields>
+      <field>
+        <aggregate>max_crimes</aggregate>
+        <subject>Crimes</subject>
+        <type>MAX</type>
+        <valuefield/>
+      </field>
+    </fields>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>544</xloc>
+      <yloc>256</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -675,4 +864,13 @@
   <slave-step-copy-partition-distribution>
   </slave-step-copy-partition-distribution>
   <slave_transformation>N</slave_transformation>
+  <attributes>
+    <group>
+      <name>explorerState</name>
+      <attribute>
+        <key>max crime</key>
+        <value/>
+      </attribute>
+    </group>
+  </attributes>
 </transformation>
